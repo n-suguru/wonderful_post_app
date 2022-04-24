@@ -1,4 +1,7 @@
 <p id="notice"><%= notice %></p>
+<p>
+  <span>email:</span><%= @user.email %>
+</p>
 
 <div class="card">
   <div class="card-header">
@@ -8,5 +11,7 @@
     <%= @article.content %>
   </div>
 </div>
-<%= link_to '編集', edit_article_path(@article), class: "btn btn-warning" %>
-<%= link_to '一覧', articles_path, class: "btn btn-secondary" %>
+<% if @article.user_id == current_user.id %>
+  <%= link_to '編集', edit_article_path(@article), class: "btn btn-warning" %>
+<% end %>
+  <%= link_to '一覧', articles_path, class: "btn btn-secondary" %>
