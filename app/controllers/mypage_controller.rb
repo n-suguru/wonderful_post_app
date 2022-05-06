@@ -2,7 +2,7 @@ class MypageController < ApplicationController
   before_action :set_article, only: %i[edit update destroy]
 
   def index
-    @articles = Article.where(user_id: current_user.id)
+    @articles = Article.where(user_id: current_user.id).page(params[:page])
   end
 
   def show
