@@ -4,7 +4,11 @@ class ArticlesController < ApplicationController
 
   # GET /articles
   def index
-    @articles = Article.all.page(params[:page])
+    if params[:title].present?
+      @articles = Article.where('title LIKE ?', "%#{params[:title]}%").page(params[:page])
+    else
+      @articles = Article.all.page(params[:page])
+    end
   end
 
   # GET /articles/1
@@ -57,4 +61,5 @@ class ArticlesController < ApplicationController
     def article_params
       params.require(:article).permit(:title, :content, :user_id)
     end
+
 end
