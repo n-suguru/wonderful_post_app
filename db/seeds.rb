@@ -6,32 +6,12 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-3.times do |n|
-  User.create!(
-    email: "user00#{n + 1}@test.com",
-    password: "test1234"
-  )
+user = User.find_or_create_by!(email: "1@test.com") do |_user|
+  _user.password = 'test1234'
 end
 
+article_owned_user = user.articles.find_or_create_by!(title: "No.1") do |article|
+  article.content = "example"
+end
 
-  50.times do |n|
-    User.first.articles.create!(
-      title: "No.#{n+1}:user001の記事",
-      content: "No.#{n+1}:user001の記事の本文"
-    )
-  end
-
-
-  50.times do |n|
-    User.second.articles.create!(
-      title: "No.#{n+1}:user002の記事",
-      content: "No.#{n+1}:user002の記事の本文"
-    )
-  end
-
-  50.times do |n|
-    User.third.articles.create!(
-      title: "No.#{n+1}:user003の記事",
-      content: "No.#{n+1}:user003の記事の本文"
-    )
-  end
+article_owned_user.tags.create!(name: 'sample')
